@@ -5,8 +5,6 @@ import axios, {
   Method,
 } from "axios";
 
-import { saveAs } from "file-saver";
-
 export const API_HOST =
   process.env.NODE_ENV === "development"
     ? window.location.origin + "/api"
@@ -128,13 +126,13 @@ export function tansParams(params: any): string {
   return result;
 }
 
-export function downloadFile(url: string, params: object, filename: string) {
-  service(url, params).then((res) => {
-    const { data } = res.data;
-    const blob = new Blob([data]);
-    let name = filename ? filename : new Date().getTime().toString()
-    saveAs(blob, name);
-  }).catch(res =>{
-    console.log(res)
-  })
-}
+// export function downloadFile(url: string, params: object, filename: string) {
+//   service(url, params).then((res) => {
+//     const { data } = res.data;
+//     const blob = new Blob([data]);
+//     let name = filename ? filename : new Date().getTime().toString()
+//     saveAs(blob, name);
+//   }).catch(res =>{
+//     console.log(res)
+//   })
+// }

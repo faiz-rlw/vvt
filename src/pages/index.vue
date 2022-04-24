@@ -2,6 +2,7 @@
 import dayjs from 'dayjs';
 import toast from '~/utils/util';
 onMounted(() => {
+    // console.log(http)
 })
 const { x, y } = useMouse()
 let value5 = ref()
