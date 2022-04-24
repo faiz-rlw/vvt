@@ -6,12 +6,15 @@ import ViteRestart from 'vite-plugin-restart'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import Prism from 'markdown-it-prism'
 import Markdown from 'vite-plugin-md'
 import WindiCSS from 'vite-plugin-windicss'
 import {
     AntDesignVueResolver,
     VueUseComponentsResolver,
 } from 'unplugin-vue-components/resolvers'
+
+const markdownWrapperClasses = 'prose md:prose-lg lg:prose-lg dark:prose-invert text-left p-10 prose-slate prose-img:rounded-xl prose-headings:underline prose-a:text-blue-600'
 export default () => {
     return [
         vue({
@@ -58,7 +61,12 @@ export default () => {
         WindiCSS(),
 
         // 支持markdown页面
-        Markdown(),
+        Markdown({
+            wrapperClasses: markdownWrapperClasses,
+            markdownItSetup(md) {
+                md.use(Prism)
+            },
+        }),
 
         // 调试工具
         Inspect(),
