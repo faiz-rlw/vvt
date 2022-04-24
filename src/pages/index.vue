@@ -2,7 +2,6 @@
 import dayjs from 'dayjs';
 import toast from '~/utils/util';
 onMounted(() => {
-    toast("123")
 })
 const { x, y } = useMouse()
 let value5 = ref()
