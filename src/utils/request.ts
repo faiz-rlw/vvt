@@ -126,13 +126,25 @@ export function tansParams(params: any): string {
   return result;
 }
 
-// export function downloadFile(url: string, params: object, filename: string) {
-//   service(url, params).then((res) => {
-//     const { data } = res.data;
-//     const blob = new Blob([data]);
-//     let name = filename ? filename : new Date().getTime().toString()
-//     saveAs(blob, name);
-//   }).catch(res =>{
-//     console.log(res)
-//   })
-// }
+export function downloadFile(url: string, params: object, filename: string) {
+  service(url, params)
+    .then((res) => {
+      const { data } = res.data;
+      let name = filename ? filename : new Date().getTime().toString();
+      download(data, name);
+    })
+    .catch((res) => {
+      console.log(res);
+    });
+}
+
+function download(content: any, fileName: string) {
+  let blob = new Blob([content]);
+  let url = window.URL.createObjectURL(blob);
+  let dom = document.createElement("a");
+  dom.style.display = "none";
+  dom.href = url;
+  dom.setAttribute("download", fileName);
+  document.body.appendChild(dom);
+  dom.click();
+}
