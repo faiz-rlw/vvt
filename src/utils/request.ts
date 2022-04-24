@@ -5,6 +5,8 @@ import axios, {
   Method,
 } from "axios";
 
+import { saveAs } from "file-saver";
+
 export const API_HOST =
   process.env.NODE_ENV === "development"
     ? window.location.origin + "/api"
@@ -22,8 +24,7 @@ service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     // 让每个请求携带自定义token
     if (config.headers) {
-      config.headers.Authorization =
-        localStorage.getItem("WORKSYSTEMTOKEN") || "";
+      config.headers.token = localStorage.getItem("WORKSYSTEMTOKEN") || "";
     }
 
     // 请求映射params参数
@@ -52,7 +53,7 @@ service.interceptors.response.use(
       res.request.responseType === "blob" ||
       res.request.responseType === "arraybuffer"
     ) {
-      return res.data;
+      return res;
     }
     if (code === 200) {
       return Promise.resolve(res);
@@ -72,14 +73,14 @@ service.interceptors.response.use(
  * @param {object} data 请求数据(object)
  * @param {boolean} contentType true: json格式  false: form格式
  * @param {Method} type 请求方式
- * @return {*}
+ * @return {AxiosInstance}
  */
 export function fetchEndpoint(
   reqUrl: string,
   data: object,
   contentType: boolean = true,
   type: Method = "POST"
-): any {
+): AxiosInstance | any {
   if (!reqUrl) {
     return false;
   }
@@ -125,4 +126,15 @@ export function tansParams(params: any): string {
     }
   }
   return result;
+}
+
+export function downloadFile(url: string, params: object, filename: string) {
+  service(url, params).then((res) => {
+    const { data } = res.data;
+    const blob = new Blob([data]);
+    let name = filename ? filename : new Date().getTime().toString()
+    saveAs(blob, name);
+  }).catch(res =>{
+    console.log(res)
+  })
 }
