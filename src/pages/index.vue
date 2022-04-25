@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import dayjs from 'dayjs';
-import http from "~/api/index";
+import http from "~/api";
+import {useUserStore} from '~/store/user'
+const user = useUserStore();
 onMounted(() => {
+    console.log("savedName",user.newName)
     console.log(http)
     http.login({id:1})
 })
