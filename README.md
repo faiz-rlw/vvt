@@ -19,6 +19,7 @@ git clone https://gitee.com/yysr_rlw/vue3-vite.git
 -   布局系统
 -   Api 自动引入
 -   组件自动引入
+-   图标库引入
 -   插件自动加载支持
 -   axios 封装请求
 -   pinia
@@ -37,54 +38,30 @@ git clone https://gitee.com/yysr_rlw/vue3-vite.git
 
 ```shell
 pnpm install
-```
 
-或者
+# npm install
 
-```shell
-npm install
-```
-
-或者
-
-```shell
-yarn
+# yarn
 ```
 
 ### 2. 项目启动
 
 ```shell
 pnpm dev
-```
 
-或者
+# npm run dev
 
-```shell
-npm run dev
-```
-
-或者
-
-```shell
-yarn dev
+# yarn dev
 ```
 
 ### 3. 项目打包
 
 ```shell
 pnpm build
-```
 
-或者
+# npm run build
 
-```shell
-npm run build
-```
-
-或者
-
-```shell
-yarn build
+# yarn build
 ```
 
 ## 项目细节
@@ -183,6 +160,31 @@ onMounted(() => {
 👉 [ant design of vue](https://next.antdv.com/docs/vue/introduce-cn/) （模板内置）
 [element-plus](https://element-plus.gitee.io/zh-CN/)
 ...
+
+```shell
+# 若不想使用ant design of vue
+pnpm uninstall ant-design-vue
+```
+
+```typescript
+/**
+ * plugin/index.ts
+ * 删除以下内容
+*/
+import {
+--  AntDesignVueResolver,
+    ...
+} from 'unplugin-vue-components/resolvers'
+
+Components({
+    ...
+    resolvers: [
+--      AntDesignVueResolver(),
+        ...
+    ],
+}),
+```
+
 <br />
 
 ### [5. VueUse 支持](https://vueuse.org/)
@@ -303,7 +305,7 @@ export const useUserStore = defineStore("user", () => {
 
 ### [9. 图标库](https://github.com/antfu/unplugin-icons)
 
-在该 👉 [icones] (https://icones.netlify.app/)图标库中任意的图标，都可直接点击即复制至页面内
+在该 👉 [icones] (https://icones.netlify.app/) 图标库中任意的图标，都可直接点击即复制至页面内
 
 支持 svg、h5 标签等方式载入
 
@@ -336,8 +338,11 @@ export const useUserStore = defineStore("user", () => {
     ...
 </template>
 ```
+
 推荐使用 `vscode` 插件 `Iconify IntelliSense`
 
 若标签的形式引入图标，将可以在 vscode 代码中直接可以看到标签的具体图标
 
 其他用法：👉 [unplugin-icons](https://github.com/antfu/unplugin-icons)
+
+<br />
