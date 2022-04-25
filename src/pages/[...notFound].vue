@@ -8,5 +8,5 @@
 </style>
 
 <route lang="yaml">
-meta:default
+meta:noLayout
 </route>
