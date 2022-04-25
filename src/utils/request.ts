@@ -65,6 +65,10 @@ service.interceptors.response.use(
   }
 );
 
+interface dataConfig {
+  [name: string]: any;
+}
+
 /**
  * @description: 封装请求
  * @param {string} reqUrl 请求地址 若后面加'reqUrl:id'实际请求为'reqUrl/id'的形式
@@ -75,7 +79,7 @@ service.interceptors.response.use(
  */
 export function fetchEndpoint(
   reqUrl: string,
-  data: object,
+  data: dataConfig,
   contentType: boolean = true,
   type: Method = "POST"
 ): AxiosInstance | any {
@@ -84,7 +88,7 @@ export function fetchEndpoint(
   }
   let urlArr = reqUrl.split(":");
   let url = `${urlArr[0]}${
-    urlArr.length > 1 ? "/" + Object.values(data)[0] : ""
+    urlArr.length > 1 ? "/" + data[urlArr[1]] : ""
   }`;
   let reqData = {
     method: type,

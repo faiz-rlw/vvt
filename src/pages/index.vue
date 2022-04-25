@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import dayjs from 'dayjs';
+import http from "~/api/index";
 onMounted(() => {
-    // console.log(http)
+    console.log(http)
+    http.login({id:1})
 })
 const { x, y } = useMouse()
 let value5 = ref()

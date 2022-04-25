@@ -1,6 +1,10 @@
 const modulesFile = import.meta.globEager("./allApi/*.ts");
 
-let modules = {};
+interface modulesConfig {
+  [name: string]: any;
+}
+
+let modules:modulesConfig = {};
 let obj = [];
 
 for (const key in modulesFile) {
@@ -10,4 +14,5 @@ for (const key in modulesFile) {
 obj.forEach((item) => {
   modules = { ...modules, ...item };
 });
+
 export default modules;
