@@ -15,21 +15,21 @@ git clone https://gitee.com/yysr_rlw/vue3-vite.git
 
 ## 项目配置项
 
-- 文件路由
-- 布局系统
-- Api 自动引入
-- 组件自动引入
-- 插件自动加载支持
-- axios 封装请求
-- pinia
-- VueUse 支持
-- Windi CSS
-- pnpm 包管理器
-- 页面跳转进度条
-- Inspect 调试支持
-- tsx 支持
-- 支持 Markdown 渲染
-- 路径别名 `~` 支持
+-   文件路由
+-   布局系统
+-   Api 自动引入
+-   组件自动引入
+-   插件自动加载支持
+-   axios 封装请求
+-   pinia
+-   VueUse 支持
+-   Windi CSS
+-   pnpm 包管理器
+-   页面跳转进度条
+-   Inspect 调试支持
+-   tsx 支持
+-   支持 Markdown 渲染
+-   路径别名 `~` 支持
 
 ## 项目起步
 
@@ -91,32 +91,34 @@ yarn build
 
 ### [1. 文件路由](https://github.com/hannoeru/vite-plugin-pages)
 
-- `src/pages/index.vue` => `/`（ 默认 index.vue 为路由根目录）
-- `src/pages/about.md` => `/about` 持 md 文件渲染显示)
-- `src/pages/users/index.vue` => `/users` （文件夹为上级目录)
-- `src/pages/users/[id].vue` => `/users/:id`（页面 prams 传参)
-- `src/pages/[user]/settings.vue` => `/:user/settings`（动态路由）
-- `src/pages/[...notFound].vue` => 404 路由（无效页面跳转至 404)
+-   `src/pages/index.vue` => `/`（ 默认 index.vue 为路由根目录）
+-   `src/pages/about.md` => `/about` 持 md 文件渲染显示)
+-   `src/pages/users/index.vue` => `/users` （文件夹为上级目录)
+-   `src/pages/users/[id].vue` => `/users/:id`（页面 prams 传参)
+-   `src/pages/[user]/settings.vue` => `/:user/settings`（动态路由）
+-   `src/pages/[...notFound].vue` => 404 路由（无效页面跳转至 404)
+
+<br />
 
 ### [2. 布局系统](https://github.com/dishait/vite-plugin-vue-meta-layouts)
 
-- default.vue
+-   default.vue
 
 ```html
 <!-- src/layouts/default.vue -->
 <template>
-  我是默认布局
-  <router-view />
-  <!-- 页面视图出口 -->
+    我是默认布局
+    <router-view />
+    <!-- 页面视图出口 -->
 </template>
 ```
 
-- index.vue
+-   index.vue
 
 ```html
 <!-- src/pages/index.vue -->
 <template>
-  <div>我是首页</div>
+    <div>我是首页</div>
 </template>
 
 <!-- 
@@ -143,7 +145,7 @@ yarn build
 import { ref, onMounted } from "vue";
 const count = ref(0);
 onMounted(() => {
-  count.value++;
+    count.value++;
 });
 ```
 
@@ -152,11 +154,11 @@ onMounted(() => {
 ```ts
 const count = ref(0);
 onMounted(() => {
-  count.value++;
+    count.value++;
 });
 ```
 
-具体可见 👉 [unplugin-auto-import](https://github.com/antfu/unplugin-auto-import) 与 [vite-auto-import-resolvers](https://github.com/dishait/vite-auto-import-resolvers)
+原地址： 👉 [unplugin-auto-import](https://github.com/antfu/unplugin-auto-import) 与
 
 <br />
 
@@ -168,12 +170,12 @@ onMounted(() => {
 
 ```html
 <script setup lang="ts">
-  // 可省略引入
-  import HelloWord from "../components/HelloWord.vue";
+    // 可省略引入
+    import HelloWord from "../components/HelloWord.vue";
 </script>
 
 <template>
-  <HelloWord />
+    <HelloWord />
 </template>
 ```
 
@@ -189,16 +191,16 @@ VueUse 是一个基于 Composition API 的实用函数集合。
 
 ```html
 <script setup lang="ts">
-  // useMouse 被自动按需引入了，不需要import
-  const { x, y } = useMouse();
+    // useMouse 被自动按需引入了，不需要import
+    const { x, y } = useMouse();
 </script>
 <template>
-  <div>x坐标 {{x}}</div>
-  <div>y坐标 {{y}}</div>
+    <div>x坐标 {{x}}</div>
+    <div>y坐标 {{y}}</div>
 </template>
 ```
 
-具体可见 👉 [VueUse](https://vueuse.org/)
+原地址： 👉 [VueUse](https://vueuse.org/)
 
 <br />
 
@@ -222,7 +224,7 @@ VueUse 是一个基于 Composition API 的实用函数集合。
 import { fetchEndpoint } from "~/utils/request";
 
 export default {
-  login: (data: object) => fetchEndpoint("/login:id", data),
+    login: (data: object) => fetchEndpoint("/login:id", data),
 };
 ```
 
@@ -232,11 +234,13 @@ index.vue
 
 ```html
 <script setup lang="ts">
-  import http from "~/api";
+    import http from "~/api";
 
-  http.login({ id: 1 });
+    http.login({ id: 1 });
 </script>
 ```
+
+<br />
 
 ### [7. Windi CSS 支持](https://windicss.org/guide/)
 
@@ -254,7 +258,9 @@ Windi CSS 是从零开始编写的 Tailwind CSS 的替代方案。它的零依�
   ...
 ```
 
-具体可见 👉 [Windi CSS](https://windicss.org/guide/)
+原地址： 👉 [Windi CSS](https://windicss.org/guide/)
+
+<br />
 
 ### [8. pinia 支持](https://pinia.vuejs.org/)
 
@@ -262,30 +268,76 @@ Windi CSS 是从零开始编写的 Tailwind CSS 的替代方案。它的零依�
 
 在页面引入调用即可
 
-甚至可以使用计算属性computed
+甚至可以使用计算属性 computed
 
 ```javascript
 import { defineStore } from "pinia";
 
 export const useUserStore = defineStore("user", () => {
-  const name = ref("hellowPinia");
-  const newName = computed(() => name.value + "!");
-  return {
-    name,
-    newName
-  };
+    const name = ref("hellow pinia");
+    const newName = computed(() => name.value + "!");
+    return {
+        name,
+        newName,
+    };
 });
 ```
 
 ```html
 <script setup lang="ts">
-  import { useUserStore } from "~/store/user";
-  const user = useUserStore();
+    import { useUserStore } from "~/store/user";
+    const user = useUserStore();
 </script>
 
 <template>
-  <div class="container">{{user.name}} // hellowPinia</div>
-  <div class="container">{{user.newName}} // hellowPinia!</div>
+    <div class="container">{{user.name}}</div>
+    // hellow pinia
+    <div class="container">{{user.newName}}</div>
+    // hellow pinia!
 </template>
 ```
-具体可见 👉 [pinia](https://pinia.vuejs.org/)
+
+原地址： 👉 [pinia](https://pinia.vuejs.org/)
+
+<br />
+
+### [9. 图标库](https://github.com/antfu/unplugin-icons)
+
+在该 👉 [icones] (https://icones.netlify.app/)图标库中任意的图标，都可直接点击即复制至页面内
+
+支持 svg、h5 标签等方式载入
+
+```html
+<template>
+    // 标签的形式
+    <i-ic:baseline-back-hand />
+
+    // svg的形式
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        aria-hidden="true"
+        role="img"
+        class="iconify iconify--ic"
+        width="32"
+        height="32"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 24 24"
+    >
+        <path
+            fill="currentColor"
+            d="M13 24c-3.
+  26 0-6.19-1.99-7.4-5.02l-3.03-7.61a1 1 0 0 1 1.24-1.32l.79.26c.56.18 1.02.61 1.24 1.16L7.25 
+  15H8V3.25a1.25 1.25 0 0 1 2.5 0V12h1V1.25a1.25 1.25 0 0 1 2.5 0V12h1V2.75a1.25 1.25 0 0 1 2.5 
+  0V12h1V5.75a1.25 1.25 0 0 1 2.5 0V16c0 4.42-3.58 8-8 8z"
+        ></path>
+    </svg>
+
+    ...
+</template>
+```
+推荐使用 `vscode` 插件 `Iconify IntelliSense`
+
+若标签的形式引入图标，将可以在 vscode 代码中直接可以看到标签的具体图标
+
+其他用法：👉 [unplugin-icons](https://github.com/antfu/unplugin-icons)

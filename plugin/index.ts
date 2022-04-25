@@ -3,6 +3,8 @@ import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import Inspect from 'vite-plugin-inspect'
 import ViteRestart from 'vite-plugin-restart'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -41,6 +43,11 @@ export default () => {
             dts: 'src/auto-imports.d.ts',
         }),
 
+        // 图标库（ https://icones.netlify.app/ ）
+        Icons({
+			autoInstall: true,
+		}),
+
         // 预设热重启服务
         ViteRestart({
             restart: ['.env*', 'plugin/index.[jt]s'],
@@ -52,6 +59,7 @@ export default () => {
             include: [/\.vue$/, '/\.md$/', /\.tsx$/],
             dts: 'src/components.d.ts',
             resolvers: [
+                IconsResolver(),
                 AntDesignVueResolver(),
                 VueUseComponentsResolver(),
             ],

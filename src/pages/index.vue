@@ -3,6 +3,7 @@
 
 <template>
     <div class="container">
+        <i-ic:baseline-6k-plus />
     </div>
 </template>
 
