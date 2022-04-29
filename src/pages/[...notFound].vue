@@ -1,12 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+</script>
 
 <template>
-    <div class="container"></div>
+    <div class=""></div>
 </template>
 
-<style lang="less" scoped>
-</style>
-
 <route lang="yaml">
-meta:noLayout
+meta: noLayout
 </route>
