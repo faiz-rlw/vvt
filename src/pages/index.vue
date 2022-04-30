@@ -8,5 +8,6 @@ import Aaaqqqq from "~/components/Aaaqqqq.vue";
 </template>
 
 <route lang="yaml">
-meta: default
+meta: 
+    layout: default
 </route>
