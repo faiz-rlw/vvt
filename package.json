@@ -3,11 +3,8 @@
   "packageManager": "pnpm@6.32.3",
   "scripts": {
     "build": "vite build",
-    "dev": "vite --port 3333",
-    "lint": "eslint .",
-    "typecheck": "vue-tsc --noEmit",
-    "preview": "vite preview",
-    "test": "vitest"
+    "dev": "vite --port 3434 --host 0.0.0.0",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@vueuse/core": "^8.2.5",
