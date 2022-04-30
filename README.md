@@ -24,12 +24,12 @@ git clone https://gitee.com/yysr_rlw/vue3-vite.git
 -   axios 封装请求
 -   pinia
 -   VueUse 支持
--   Windi CSS
+-   unocss
 -   pnpm 包管理器
 -   页面跳转进度条
 -   Inspect 调试支持
 -   tsx 支持
--   支持 Markdown 渲染
+-   支持 Markdown 页面渲染
 -   路径别名 `~` 支持
 
 ## 项目起步
@@ -135,7 +135,7 @@ onMounted(() => {
 });
 ```
 
-原地址： 👉 [unplugin-auto-import](https://github.com/antfu/unplugin-auto-import) 与
+详细用法： 👉 [unplugin-auto-import](https://github.com/antfu/unplugin-auto-import) 与
 
 <br />
 
@@ -168,7 +168,7 @@ pnpm uninstall ant-design-vue
 
 ```typescript
 /**
- * plugin/index.ts
+ * vite.config.ts
  * 删除以下内容
 */
 import {
@@ -202,7 +202,7 @@ VueUse 是一个基于 Composition API 的实用函数集合。
 </template>
 ```
 
-原地址： 👉 [VueUse](https://vueuse.org/)
+详细用法： 👉 [VueUse](https://vueuse.org/)
 
 <br />
 
@@ -244,23 +244,25 @@ index.vue
 
 <br />
 
-### [7. Windi CSS 支持](https://windicss.org/guide/)
+### [7. unocss 支持](https://github.com/unocss/unocss)
 
 原子化 CSS
 
-Windi CSS 是从零开始编写的 Tailwind CSS 的替代方案。它的零依赖，也不要求用户安装 PostCSS 和 Autoprefixer。更为重要的是，它支持 按需生成。Windi CSS 不会一次生成所有的 CSS，而是只会生成你在代码中实际使用到的原子化 CSS。
+UnoCSS 是一个引擎，而非一款框架，因为它并未提供核心工具类，所有功能可以通过预设和内联配置提供。默认情况下，UnoCSS 应用默认预设。它提供了流行的实用程序优先框架的通用超集，包括 Tailwind CSS、Windi CSS、Bootstrap、Tachyons 等。。
 
 实际用法：
 
-直接在 dom 元素的 class 写上表达式
+直接在 标签 写上表达式
 
 ```css
-  <div class="bg-blue-200 p-10px text-18px m-15px">Windi CSS</div>
-  <div class="bg-hex-F2F2F2">Windi CSS</div>
+  <div bg-blue-200 p-10px text-18px m-15px>unocss</div>
+  <div bg-hex-F2F2F2>unocss</div>
   ...
 ```
-
-原地址： 👉 [Windi CSS](https://windicss.org/guide/)
+详细用法： 
+1. [tailwind css](https://www.tailwindcss.cn/)
+2. [windi css](https://cn.windicss.org/) 
+...               
 
 <br />
 
@@ -299,7 +301,7 @@ export const useUserStore = defineStore("user", () => {
 </template>
 ```
 
-原地址： 👉 [pinia](https://pinia.vuejs.org/)
+详细用法： 👉 [pinia](https://pinia.vuejs.org/)
 
 <br />
 
@@ -343,6 +345,6 @@ export const useUserStore = defineStore("user", () => {
 
 若标签的形式引入图标，将可以在 vscode 代码中直接可以看到标签的具体图标
 
-其他用法：👉 [unplugin-icons](https://github.com/antfu/unplugin-icons)
+详细用法：👉 [unplugin-icons](https://github.com/antfu/unplugin-icons)
 
 <br />

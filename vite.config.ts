@@ -18,6 +18,7 @@ import LinkAttributes from 'markdown-it-link-attributes'
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
 import {
+  AntDesignVueResolver,
   VueUseComponentsResolver,
 } from 'unplugin-vue-components/resolvers'
 
@@ -67,6 +68,7 @@ export default defineConfig({
       include: [/\.vue$/, '/\.md$/', /\.tsx$/],
       dts: true,
       resolvers: [
+        AntDesignVueResolver(),
         IconsResolver(),
         VueUseComponentsResolver(),
       ],
