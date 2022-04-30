@@ -14,22 +14,6 @@ html.dark {
     scroll-behavior: smooth;
 }
 
-#nprogress {
-    pointer-events: none;
-}
-
-#nprogress .bar {
-    @apply bg-purple-700 bg-opacity-75;
-
-    position: fixed;
-    z-index: 1031;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 2px;
-}
-
 /*
 * 全局滚动条
 */

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-
+import Aaaqqqq from "~/components/Aaaqqqq.vue";
 </script>
 
 <template>
     <div class=""></div>
-    <Aaa />
+    <Aaaqqqq />
 </template>
 
 <route lang="yaml">

@@ -3,9 +3,9 @@
 </script>
 
 <template>
-    <div class=""></div>
+    <div class="">1233</div>
 </template>
 
 <route lang="yaml">
-meta: noLayout
+meta: default
 </route>

@@ -1,18 +1,12 @@
 import { createApp } from 'vue'
+import router from './router'
 import App from './App.vue'
 
-import 'virtual:windi.css'
-import router from "./router/index";
-
-import 'ant-design-vue/dist/antd.css';
-import './config/main.css'
-
-import dayjs from 'dayjs'
-import 'dayjs/locale/zh-cn' 
-dayjs.locale('zh-cn') 
+import '@unocss/reset/tailwind.css'
+import './styles/main.css'
+import 'uno.css'
 
 const app = createApp(App)
 app.use(router)
 app.use(createPinia())
 app.mount('#app')
-
