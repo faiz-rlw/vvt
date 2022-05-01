@@ -5,7 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Aaa: typeof import('./components/Aaa.tsx')['default']
+    Aaa: typeof import('./components/Aaa.vue')['default']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

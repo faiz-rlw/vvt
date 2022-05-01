@@ -10,7 +10,3 @@ import zhCN from 'ant-design-vue/es/locale/zh_CN';
 
 <style lang="less" scoped>
 </style>
-
-<route lang="yaml">
-meta:default
-</route>

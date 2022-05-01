@@ -7,5 +7,5 @@
 </template>
 
 <route lang="yaml">
-meta: noLayout
+{ meta: { layout: 'blank' } } 
 </route>

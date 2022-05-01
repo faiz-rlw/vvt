@@ -4,9 +4,8 @@
 
 <template>
     <div class=""></div>
-    <Aaa />
 </template>
 
 <route lang="yaml">
-meta: default
+{ meta: { layout: 'default' } } 
 </route>
