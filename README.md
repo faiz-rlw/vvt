@@ -103,7 +103,7 @@ pnpm build
     此处的（default）来自于layouts文件夹下的default.vue
     举一反三，若想修改布局，layouts文件下的notFound.vue，将meta：后面改成文件名即可（otFound）
 -->
-<route lang="yaml"> meta:default </route>
+<route lang="yaml"> { meta: { layout: 'default' } } </route>
 ```
 
 <br />
