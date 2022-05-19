@@ -3,7 +3,7 @@ import { types } from "./base";
 import toastComponent from "./toast.vue";
 import { App, createApp } from "vue";
 
-let timer:any = null;
+let timer: NodeJS.Timeout;
 
 const toast: dto.toast = (options: dto.options) => {
     const toastApp = createApp(toastComponent, options);
@@ -30,7 +30,6 @@ function hideToast(app: App<Element>, vm: any, duration: number) {
         await vm.setVisible(false);
         app.unmount();
         clearTimeout(timer);
-        timer = null;
     }, duration || 3000);
 }
 

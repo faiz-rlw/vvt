@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { types, findTypesKey } from "./base";
 
-let timer: any = null;
+let timer: NodeJS.Timeout;
 const props = defineProps({
     type: {
         type: String,
@@ -31,7 +31,6 @@ const setVisible = (isVisible: boolean) => {
         timer = setTimeout(() => {
             resolve("");
             clearTimeout(timer);
-            timer = null;
         }, 300);
     });
 };
