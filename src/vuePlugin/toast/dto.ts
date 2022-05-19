@@ -15,3 +15,9 @@ export type options = {
     message: string;
     duration: number;
 };
+
+export type toastArr = {
+    height: number;
+    margin: number;
+    setTop: Function
+}

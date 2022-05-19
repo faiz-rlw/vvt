@@ -14,10 +14,10 @@ const props = defineProps({
         type: String,
         default: types.MESSAGE,
     },
-    duration: {
+    zIndex: {
         type: Number,
-        default: 300,
-    },
+        default: 1
+    }
 });
 
 const state = reactive({
@@ -35,8 +35,13 @@ const setVisible = (isVisible: boolean) => {
     });
 };
 
+const setTop = (top: number) => {
+    state.top = top + 20
+}
+
 defineExpose({
     setVisible,
+    setTop,
     height: 40,
     margin: 20,
 });
@@ -49,14 +54,11 @@ const styleClass = computed(() => ["r-toast", type.value]);
 
 <template>
     <transition name="r-toast-fade">
-        <div
-            :class="styleClass"
-            v-show="state.visible"
-            :style="{
-                top: state.top + 'px',
-            }"
-        >
-            {{ props.message }}
+        <div :class="styleClass" v-show="state.visible" :style="{
+            top: state.top + 'px',
+            zIndex: props.zIndex
+        }">
+            {{ props.message }} 
         </div>
     </transition>
 </template>
@@ -71,7 +73,9 @@ const styleClass = computed(() => ["r-toast", type.value]);
     text-align: center;
     font-size: 14px;
     border-radius: 5px;
+    transition: top .3 ease-out;
 }
+
 .SUCCESS {
     background-color: #f0f9eb;
     color: #529b2e;
