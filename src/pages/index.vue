@@ -1,24 +1,20 @@
 <script setup lang="ts">
-// import toast from "~/vuePlugin/toast/toast.vue";
 import toast from "~/vuePlugin/toast/index";
 </script>
 
 <template>
     <div class="">
-        <!-- <toast type="success"></toast> -->
         <a-button
             @click="
                 toast({
-                    type: 'success',
-                    message: 'success',
+                    message: 'success!!!',
                 })
             "
             >success</a-button
         >
         <a-button
             @click="
-                toast({
-                    type: 'warning',
+                toast.warning({
                     message: 'warning',
                 })
             "

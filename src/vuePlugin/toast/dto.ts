@@ -5,6 +5,10 @@ export type types = {
     ERROR: string;
 };
 
+export type iconSvg = {
+    [name:string] : any
+}
+
 export type toast = {
     (value: any): void;
     [name: string]: any;

@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { types, findTypesKey } from "./base";
+import { types, findTypesKey, iconSvg } from "./base";
 
 let timer: NodeJS.Timeout;
 const props = defineProps({
     type: {
         type: String,
-        default: types.MESSAGE,
+        default: types.SUCCESS,
         validator(val: string) {
             return Object.values(types).includes(val);
         },
     },
     message: {
         type: String,
-        default: types.MESSAGE,
+        default: types.SUCCESS,
     },
     zIndex: {
         type: Number,
-        default: 1
-    }
+        default: 1,
+    },
 });
 
 const state = reactive({
@@ -36,8 +36,8 @@ const setVisible = (isVisible: boolean) => {
 };
 
 const setTop = (top: number) => {
-    state.top = top + 20
-}
+    state.top = top + 20;
+};
 
 defineExpose({
     setVisible,
@@ -50,30 +50,47 @@ const type = computed(() => {
     return findTypesKey(props.type);
 });
 const styleClass = computed(() => ["r-toast", type.value]);
+
+const svgHtml = computed(() => iconSvg[type.value]);
 </script>
 
 <template>
     <transition name="r-toast-fade">
-        <div :class="styleClass" v-show="state.visible" :style="{
-            top: state.top + 'px',
-            zIndex: props.zIndex
-        }">
-            {{ props.message }} 
+        <div
+            :class="styleClass"
+            v-show="state.visible"
+            :style="{
+                top: state.top + 'px',
+                zIndex: props.zIndex,
+            }"
+        >
+            <div v-html="svgHtml" style="margin-right: 6px"></div>
+            {{ props.message }}
         </div>
     </transition>
 </template>
-<style lang="less" scoped>
+<style scoped>
 .r-toast {
     position: fixed;
     left: 50%;
+    padding: 0 10px;
     margin-left: -190px;
+    display: flex;
+    align-items: center;
     min-width: 380px;
     height: 40px;
     line-height: 40px;
     text-align: center;
     font-size: 14px;
     border-radius: 5px;
-    transition: top .3 ease-out;
+    transition: top 0.3 ease-out;
+    box-sizing: border-box;
+}
+
+.icon-style {
+    width: 20px;
+    height: 20px;
+    background-color: red;
 }
 
 .SUCCESS {
