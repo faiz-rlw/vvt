@@ -346,3 +346,84 @@ export const useUserStore = defineStore("user", () => {
 其他用法：👉 [unplugin-icons](https://github.com/antfu/unplugin-icons)
 
 <br />
+
+### [9. rem 支持]()
+1. [amfe-flexable](https://github.com/amfe/lib-flexible)是阿里发布的一套可伸缩适配方案。它能根据设备的宽高来设置页面body元素的字体大小，将1rem设置为设备宽度/10以及在页面大小转换时可以重新计算这些数值。
+2. [postcss-pxtorem](https://github.com/cuth/postcss-pxtorem)是postcss的一个插件，可以将对应的像素单位转换为rem。在vite中可以直接对其进行配置，因为vite已经集成了postcss。
+
+配置：[详细可查询Github](https://github.com/cuth/postcss-pxtorem)
+```javascript
+// vite.config.ts
+export default defineConfig({
+    ...
+    css: {
+        postcss: {
+            plugins: [
+                postCssPxToRem({
+                    rootValue: 75, // 根元素的值，即1rem对应的像素值大小。一般设置为设计稿尺寸/10
+                    propList: ["*"], // 需要进行转换的css属性的值，可以使用通配符。如：*意思是将全部属性单位都进行转换；
+                    selectorBlackList: ["fixedall_"], // 过滤掉fixedall_开头的class，不进行rem转换;若设置为[/^body$/]，则body会被匹配到而不是.body
+                    // exclude: /node_modules/, // 不需要转换的文件，此处排除node_modules下的文件
+                    // mediaQuery: false, // 是否允许像素在媒体查询中进行转换
+                }),
+            ],
+        },
+    },
+}
+```
+
+使用方法: 
+以下可以将px转换成rem
+```html
+// 1. 原子化css
+<div class="w-1200px"></div>
+
+// 2. 普通css
+<div class="label_style"></div>
+<style>
+.label_style{
+    width: 1200px
+}
+</style>
+```
+
+不进行rem转换:
+
+```html
+// 1. 将px转换成大写 PX 、Px、 pX
+<div class="w-1200PX"></div>
+
+// 2. 过滤掉fixedall_开头的class
+<div class="fixedall_label"> </div>
+
+```
+
+注：若不需要该插件，请执行以下操作
+```javascript
+// mian.ts
+-- import 'amfe-flexible'
+```
+
+```javascript
+// vite.config.ts
+export default defineConfig({
+    ...
+--  css: {
+--      postcss: {
+--          plugins: [
+--              postCssPxToRem({
+--                  rootValue: 75, // 1rem的大小
+--                  propList: ["*"], // 需要转换的属性，这里选择全部都进行转换
+--                  selectorBlackList: ["fixedall_"], // 过滤掉fixedall_开头的class，不进行rem转换
+--              }),
+--          ],
+--      },
+--  },
+}
+```
+```JSON
+// package.json
+pnpm remove amfe-flexible postcss postcss-pxtorem
+```
+
+<br />
