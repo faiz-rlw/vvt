@@ -244,23 +244,23 @@ index.vue
 
 <br />
 
-### [7. Windi CSS 支持](https://windicss.org/guide/)
+### [7. Unocss 支持](https://github.com/unocss/unocss)
 
-原子化 CSS
+原子化 CSS 是一种 CSS 的架构方式，它倾向于小巧且用途单一的 class，并且会以视觉效果进行命名。
 
-Windi CSS 是从零开始编写的 Tailwind CSS 的替代方案。它的零依赖，也不要求用户安装 PostCSS 和 Autoprefixer。更为重要的是，它支持 按需生成。Windi CSS 不会一次生成所有的 CSS，而是只会生成你在代码中实际使用到的原子化 CSS。
+UnoCSS 是一个引擎，而非一款框架，因为它并未提供核心工具类，所有功能可以通过预设和内联配置提供。
 
 实际用法：
 
 直接在 dom 元素的 class 写上表达式
 
 ```css
-  <div class="bg-blue-200 p-10px text-18px m-15px">Windi CSS</div>
-  <div class="bg-hex-F2F2F2">Windi CSS</div>
+  <div class="bg-blue-200 p-10px text-18px m-15px">Unocss</div>
+  <div class="bg-hex-F2F2F2">Unocss</div>
   ...
 ```
 
-原地址： 👉 [Windi CSS](https://windicss.org/guide/)
+原地址： 👉 [Unocss](https://github.com/unocss/unocss)
 
 <br />
 
