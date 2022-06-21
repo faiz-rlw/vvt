@@ -24,7 +24,7 @@ git clone https://gitee.com/yysr_rlw/vue3-vite.git
 -   axios 封装请求
 -   pinia
 -   VueUse 支持
--   Windi CSS
+-   Uno css
 -   pnpm 包管理器
 -   页面跳转进度条
 -   Inspect 调试支持
@@ -244,23 +244,23 @@ index.vue
 
 <br />
 
-### [7. Windi CSS 支持](https://windicss.org/guide/)
+### [7. Uno css 支持](https://windicss.org/guide/)
 
 原子化 CSS
 
-Windi CSS 是从零开始编写的 Tailwind CSS 的替代方案。它的零依赖，也不要求用户安装 PostCSS 和 Autoprefixer。更为重要的是，它支持 按需生成。Windi CSS 不会一次生成所有的 CSS，而是只会生成你在代码中实际使用到的原子化 CSS。
+Uno css 是从零开始编写的 Tailwind CSS 的替代方案。它的零依赖，也不要求用户安装 PostCSS 和 Autoprefixer。更为重要的是，它支持 按需生成。Uno css 不会一次生成所有的 CSS，而是只会生成你在代码中实际使用到的原子化 CSS。
 
 实际用法：
 
 直接在 dom 元素的 class 写上表达式
 
 ```css
-  <div class="bg-blue-200 p-10px text-18px m-15px">Windi CSS</div>
-  <div class="bg-hex-F2F2F2">Windi CSS</div>
+  <div class="bg-blue-200 p-10px text-18px m-15px">Uno css</div>
+  <div class="bg-hex-F2F2F2">Uno css</div>
   ...
 ```
 
-原地址： 👉 [Windi CSS](https://windicss.org/guide/)
+原地址： 👉 [Uno css](https://windicss.org/guide/)
 
 <br />
 

@@ -7,6 +7,3 @@ import zhCN from 'ant-design-vue/es/locale/zh_CN';
         <router-view />
     </a-config-provider>
 </template>
-
-<style lang="less" scoped>
-</style>

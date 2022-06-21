@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { types, findTypesKey, iconSvg } from "./base";
-
 let timer: NodeJS.Timeout;
 const props = defineProps({
     type: {
@@ -49,13 +48,12 @@ defineExpose({
 const type = computed(() => {
     return findTypesKey(props.type);
 });
-const styleClass = computed(() => ["r-toast", type.value]);
-
-const svgHtml = computed(() => iconSvg[type.value]);
+const styleClass = computed(() => ["r-alert", type.value]);
+const svgHtml = computed(() => iconSvg[ type.value as keyof typeof types]);
 </script>
 
 <template>
-    <transition name="r-toast-fade">
+    <transition name="r-alert-fade">
         <div
             :class="styleClass"
             v-show="state.visible"
@@ -64,13 +62,13 @@ const svgHtml = computed(() => iconSvg[type.value]);
                 zIndex: props.zIndex,
             }"
         >
-            <div v-html="svgHtml" style="margin-right: 6px"></div>
+            <div v-html="svgHtml" class="icon_area_style"></div>
             {{ props.message }}
         </div>
     </transition>
 </template>
 <style scoped>
-.r-toast {
+.r-alert {
     position: fixed;
     left: 50%;
     padding: 0 10px;
@@ -85,6 +83,12 @@ const svgHtml = computed(() => iconSvg[type.value]);
     border-radius: 5px;
     transition: top 0.3 ease-out;
     box-sizing: border-box;
+}
+
+.icon_area_style{
+    margin-right: 6px;
+    display: flex;
+    align-items: center;
 }
 
 .icon-style {
@@ -113,16 +117,16 @@ const svgHtml = computed(() => iconSvg[type.value]);
     color: #c45656;
 }
 
-.r-toast-fade-enter-active {
+.r-alert-fade-enter-active {
     transition: all 0.3s ease-in;
 }
 
-.r-toast-fade-leave-active {
+.r-alert-fade-leave-active {
     transition: all 0.3s ease-out;
 }
 
-.r-toast-fade-enter-from,
-.r-toast-fade-leave-to {
+.r-alert-fade-enter-from,
+.r-alert-fade-leave-to {
     transform: translateY(-20px);
     opacity: 0;
 }
