@@ -7,7 +7,7 @@ export const types: dto.types = {
     ERROR: "error",
 };
 
-export const iconSvg: dto.iconSvg & dto.types = {
+export const iconSvg:dto.types = {
     SUCCESS: `<svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"

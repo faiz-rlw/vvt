@@ -24,7 +24,7 @@ git clone https://gitee.com/yysr_rlw/vue3-vite.git
 -   axios 封装请求
 -   pinia
 -   VueUse 支持
--   Windi CSS
+-   Uno css
 -   pnpm 包管理器
 -   页面跳转进度条
 -   Inspect 调试支持
