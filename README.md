@@ -231,17 +231,19 @@ VueUse 是一个基于 Composition API 的实用函数集合。
 
 ```typescript
 /**
- * @description: 封装请求
- * @param {string} reqUrl 请求地址 若后面加'reqUrl:id'实际请求为'reqUrl/id'的形式
- * @param {object} data 请求数据(object)
- * @param {boolean} contentType true: json格式  false: form格式
- * @param {Method} type 请求方式
- * @return {AxiosInstance}
+ * @description 统一请求
+ * @param { DEDAULT_REQUEST_OPTION_TYPE } options 请求参数 默认参数：DEDAULT_REQUEST_OPTION
+ * DEDAULT_REQUEST_OPTION_TYPE: src/types/request.d.ts
+ * @returns
  */
 import { fetchEndpoint } from "~/utils/request";
 
 export default {
-  login: (data: object) => fetchEndpoint("/login:id", data),
+  login: (data: any) =>
+    fetchEndpoint({
+      url: "/uploadFile",
+      data,
+    }),
 };
 ```
 
