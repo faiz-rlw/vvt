@@ -1,199 +1,194 @@
 import axios, {
-    AxiosInstance,
-    AxiosPromise,
-    AxiosRequestConfig,
-    AxiosResponse,
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosError,
+  InternalAxiosRequestConfig,
 } from "axios";
+import router from "@/routers";
+import {
+  CONTENT_TYPE_MAP,
+  DEDAULT_REQUEST_OPTION,
+  DEDAULT_OPERATION,
+} from "@/configs/request.config";
+import { validURL } from "./validate";
+import { toast } from "./util";
+import { useSystemStore } from "@/stores/useSystem";
+const { updateGlobalLoading } = useSystemStore();
 
-export const API_HOST =
-    process.env.NODE_ENV === "development"
-        ? window.location.origin + "/api"
-        : window.location.origin;
-
-const service: AxiosInstance = axios.create({
-    // axios中请求配置有baseURL选项，表示请求URL公共部分
-    baseURL: API_HOST,
-    // 超时
-    timeout: 10000,
+const service = axios.create({
+  // axios中请求配置有baseURL选项，表示请求URL公共部分
+  baseURL: import.meta.env.VITE_APP_BASE_API,
+  // 超时
+  timeout: 10000,
 });
 
-type reqHeaderOtherConfigDto = {
-    requestContentType: string;
-    isHaveToken: boolean;
-};
-
-let reqHeaderOtherConfig: reqHeaderOtherConfigDto = {
-    requestContentType: "",
-    isHaveToken: false,
-};
+let optertion: DEDAULT_OPERATION_TYPE = DEDAULT_OPERATION,
+  loadingCount: number = 0;
 
 // request拦截器
 service.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
-        // 让每个请求携带自定义token
-        if (config.headers) {
-            reqHeaderOtherConfig.isHaveToken &&
-                (config.headers.Authorization =
-                    localStorage.getItem("WORKSYSTEMTOKEN") || "");
-            config.headers["Content-Type"] =
-                reqHeaderOtherConfig.requestContentType;
-        }
-
-        // 请求映射params参数
-        if (config.params) {
-            let url = config.url + "?" + tansParams(config.params);
-            url = url.slice(0, -1);
-            config.params = {};
-            config.url = url;
-        }
-        return config;
-    },
-    (error) => {
-        console.log(error);
-        Promise.reject(error);
+  (config: InternalAxiosRequestConfig) => {
+    const { useLoading } = optertion;
+    if (useLoading) {
+      loadingCount++;
+      if (loadingCount === 0) {
+        // 启动loading
+        updateGlobalLoading(true);
+      }
     }
+
+    // 请求映射params参数
+    if (config.params) {
+      let url = config.url + "?" + tansParams(config.params);
+      url = url.slice(0, -1);
+      config.params = {};
+      config.url = url;
+    }
+    return config;
+  },
+  (error: AxiosError) => {
+    Promise.reject(error);
+  }
 );
 
 // 响应拦截器
 service.interceptors.response.use(
-    (res: AxiosResponse) => {
-        // 未设置状态码则默认成功状态
-        const code = res.data.code || 200;
+  (res: AxiosResponse) => {
+    const { status, msg } = res.data,
+      { fileName, openInNewWindow, autoShowErrorMessage, useLoading } =
+        optertion;
 
-        // 二进制数据则直接返回
-        if (
-            res.request.responseType === "blob" ||
-            res.request.responseType === "arraybuffer"
-        ) {
-            return Promise.resolve(res);
-        }
-        if (code === 200) {
-            return Promise.resolve(res);
-        } else {
-            return Promise.reject(res);
-        }
-    },
-    (error) => {
-        const { response } = error;
-        return Promise.reject(response);
+    // 未设置状态码则默认成功状态
+    const code = status || 200;
+
+    if (useLoading) {
+      loadingCount--;
+      if (loadingCount === 0) {
+        // 如果是最后一个响应，就关闭loading
+        updateGlobalLoading(false);
+      }
     }
+
+    // 二进制数据
+    if (
+      res.request.responseType === "blob" ||
+      res.request.responseType === "arraybuffer"
+    ) {
+      downLoadFile(res.data, fileName || "文件");
+    }
+
+    if (code === 200) {
+      if (openInNewWindow && validURL(res.data)) {
+        window.open(res.data);
+      }
+      return Promise.resolve(res.data);
+    } else {
+      autoShowErrorMessage && toast.fail(msg);
+      return Promise.reject(res.data);
+    }
+  },
+  (error: AxiosError) => {
+    let { message } = error,
+      data: Record<string, any> = { message: "" };
+
+    const { autoShowErrorMessage, useLoading } = optertion;
+
+    if (useLoading) {
+      loadingCount--;
+      if (loadingCount === 0) {
+        // 如果是最后一个响应，就关闭loading
+        updateGlobalLoading(false);
+      }
+    }
+
+    if (message == "Network Error") {
+      data.message = "服务器连接异常";
+    } else if (message.includes("timeout")) {
+      data.message = "请求超时";
+    } else if (message.includes("401")) {
+      router.push("/");
+      data.message = "登录过期，请重新登录";
+    } else if (message.includes("500")) {
+      data.message = "服务器错误";
+    } else {
+      data = error?.response?.data || { message: "" };
+    }
+    autoShowErrorMessage && toast.fail(data.message);
+    return Promise.reject(data);
+  }
 );
 
 /**
- * @description: HTTP内容类型
+ * @description 统一请求
+ * @param {DEDAULT_REQUEST_OPTION_TYPE} options 请求参数 默认参数：DEDAULT_REQUEST_OPTION
+ * @returns
  */
-const contentTypes: { [name: string]: any } = {
-    FORM: "application/x-www-form-urlencoded; charset=utf-8",
-    JSON: "application/JSON; charset=utf-8",
-    FORMDATA: "multipart/form-data",
-};
+export function fetchEndpoint(
+  options: DEDAULT_REQUEST_OPTION_TYPE = DEDAULT_REQUEST_OPTION
+): Promise<AxiosResponse> {
+  const { url, method, contentType, data, params, withToken } = {
+    ...DEDAULT_REQUEST_OPTION,
+    ...options,
+  };
 
-const reqTypes: Array<string> = ["POST", "GET", "DELETE", "PUT"];
+  const axiosConfig: AxiosRequestConfig = {
+    url,
+    method,
+    headers: {
+      "Content-Type": CONTENT_TYPE_MAP[contentType ? contentType : "JSON"],
+    },
+    data,
+    params,
+  };
 
-function setContentType(type: string) {
-    return Object.keys(contentTypes).includes(type)
-        ? contentTypes[type]
-        : contentTypes.form;
+  if (withToken && axiosConfig.headers) {
+    axiosConfig.headers["Authorization"] = ``;
+  }
+
+  return axios(axiosConfig);
 }
 
-interface dataConfig {
-    [name: string]: any;
-}
-
-type fetchOptionsDto = {
-    reqUrl: string; // 请求地址
-    data: dataConfig; // 请求数据
-    contentType?: string; // HTTP内容类型; 默认JSON
-    type?: string; // 请求方式; 默认POST
-    isHaveToken?: boolean; // 是否需要在请求头加token; 默认加token(true)
-};
-
-/**
- * @description: 封装请求
- * @param { fetchOptionsDto } options
- * reqUrl : 请求地址 |
- * data : 请求数据 |
- * contentType : HTTP内容类型 |
- * type : 请求方式 |
- * isHaveToken: 是否需要在请求头加token 
- * @returns axios
- */
-export function fetchEndpoint(options: fetchOptionsDto): AxiosPromise<any> {
-    const {
-        reqUrl,
-        data,
-        contentType = "JSON",
-        type = "POST",
-        isHaveToken = true,
-    } = options;
-
-    let urlArr = reqUrl.split("/:");
-    let url =
-        API_HOST +
-        `${urlArr[0]}${urlArr.length > 1 ? "/" + data[urlArr[1]] : ""}`;
-
-    reqHeaderOtherConfig.isHaveToken = isHaveToken;
-    reqHeaderOtherConfig.requestContentType = setContentType(
-        contentType.toUpperCase()
-    );
-
-    let reqData: dataConfig = {
-        method: reqTypes.includes(type.toUpperCase())
-            ? type.toUpperCase()
-            : "POST",
-        url,
-        data: urlArr.length > 1 ? {} : data,
-        params: urlArr.length > 1 ? {} : data,
-    };
-
-    delete reqData[contentType === "JSON" ? "params" : "data"];
-    return service({
-        ...reqData,
-    });
-}
 /**
  * @description 参数处理
- * @param {*} params  参数
+ * @param {Record<string, any>} params 参数
+ * @returns {string} 处理后的参数字符串
  */
-export function tansParams(params: any): string {
-    let result = "";
-    for (const propName of Object.keys(params)) {
-        const value = params[propName];
-        var part = encodeURIComponent(propName) + "=";
-        if (value !== null && typeof value !== "undefined") {
-            if (typeof value === "object") {
-                for (const key of Object.keys(value)) {
-                    if (
-                        value[key] !== null &&
-                        typeof value[key] !== "undefined"
-                    ) {
-                        let params = propName + "[" + key + "]";
-                        var subPart = encodeURIComponent(params) + "=";
-                        result +=
-                            subPart + encodeURIComponent(value[key]) + "&";
-                    }
-                }
-            } else {
-                result += part + encodeURIComponent(value) + "&";
-            }
+function tansParams(params: Record<string, any>): string {
+  let result = "";
+  for (const propName of Object.keys(params)) {
+    const value = params[propName];
+    const part = encodeURIComponent(propName) + "=";
+
+    if (value !== null && typeof value !== "undefined") {
+      if (typeof value === "object") {
+        for (const key of Object.keys(value)) {
+          if (value[key] !== null && typeof value[key] !== "undefined") {
+            const param = `${propName}[${key}]`;
+            const subPart = encodeURIComponent(param) + "=";
+            result += `${subPart}${encodeURIComponent(value[key])}&`;
+          }
         }
+      } else {
+        result += `${part}${encodeURIComponent(value)}&`;
+      }
     }
-    return result;
+  }
+
+  return result;
 }
 
-export async function downloadFile(options: fetchOptionsDto): Promise<void> {
-    const res = await fetchEndpoint(options);
-    const { fileName = new Date().getTime() } = options.data;
-    download(res.data, fileName);
-}
-
-function download(content: any, fileName: string): void {
-    let blob = new Blob([content]);
-    let url = window.URL.createObjectURL(blob);
-    let dom = document.createElement("a");
-    dom.style.display = "none";
-    dom.href = url;
-    dom.setAttribute("download", fileName);
-    document.body.appendChild(dom);
-    dom.click();
+/**
+ * @description 下载文件
+ * @param {*} file
+ * @param {*} fileName 名称
+ */
+function downLoadFile(file: File, fileName: string) {
+  const url = window.URL.createObjectURL(new Blob([file]));
+  const link = document.createElement("a");
+  link.style.display = "none";
+  link.href = url;
+  link.setAttribute("download", fileName);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }

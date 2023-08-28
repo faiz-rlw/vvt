@@ -1,34 +1,43 @@
+import { defineConfig, loadEnv } from "vite";
+import vueJsx from "@vitejs/plugin-vue-jsx";
+import legacy from "@vitejs/plugin-legacy";
+import plugins from "./src/plugins";
 import path from "path";
-import { defineConfig } from "vite";
-import plugins from "./plugin/index";
-import postCssPxToRem from "postcss-pxtorem";
-export default defineConfig({
+
+// https://vitejs.dev/config/
+export default ({ mode }) => {
+  process.env = {
+    ...process.env,
+    ...loadEnv(mode, process.cwd()),
+  };
+  const { VITE_APP_BASE_PATH, VITE_ENABLE_COMPATIBILITY_MODE } = process.env;
+  if (VITE_ENABLE_COMPATIBILITY_MODE === "true") {
+    plugins.push(
+      // 兼容低版本浏览器
+      legacy({
+        targets: ["defaults", "not IE 11"],
+      })
+    );
+  }
+  if (process.env.VITE_ENABLE_JAX === "true") {
+    plugins.push(
+      // 支持jsx/tsx
+      vueJsx()
+    );
+  }
+  return defineConfig({
+    base: VITE_APP_BASE_PATH,
+    plugins,
+    build: {
+      target: VITE_ENABLE_COMPATIBILITY_MODE === "true" ? "ES2015" : "modules",
+      rollupOptions: {
+        external: [path.resolve(__dirname, "./src/scripts/*")],
+      },
+    },
     resolve: {
-        alias: {
-            "~/": `${path.resolve(__dirname, "src")}/`,
-        },
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
     },
-    plugins: [plugins()],
-    server: {
-        host: "0.0.0.0",
-        // proxy: {
-        //     "/api": {
-        //         target: "", // 地址代理
-        //         changeOrigin: true,
-        //         rewrite: (path) => path.replace(/^\/api/, ""),
-        //     },
-        // },
-    },
-    base: process.env.NODE_ENV === "development" ? "/" : "./",
-    css: {
-        postcss: {
-            plugins: [
-                postCssPxToRem({
-                    rootValue: 192, // 1rem的大小
-                    propList: ["*"], // 需要转换的属性，这里选择全部都进行转换
-                    selectorBlackList: ["fixedall_"], // 过滤掉fixedall_开头的class，不进行rem转换
-                }),
-            ],
-        },
-    },
-});
+  });
+};
