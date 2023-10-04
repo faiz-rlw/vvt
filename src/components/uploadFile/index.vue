@@ -169,7 +169,7 @@ const handlePreview = (uploadFile: UploadFile) => {
 };
 
 // 图片移除之后的
-const handleRemove = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+const handleRemove = (_: UploadFile, uploadFiles: UploadFiles) => {
   emit("changeFileList", uploadFiles);
 };
 

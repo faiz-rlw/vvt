@@ -51,13 +51,6 @@ onMounted(() => {
   }
 });
 
-const emptyClass = {
-  display: "flex",
-  "align-items": "center",
-  "justify-content": "center",
-  height: "100%",
-};
-
 const fileComponent = {
   docx: VueOfficeDocx,
   excel: VueOfficeExcel,
