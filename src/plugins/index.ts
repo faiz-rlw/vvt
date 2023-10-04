@@ -1,4 +1,5 @@
 import vue from "@vitejs/plugin-vue";
+import legacy from "@vitejs/plugin-legacy";
 import Layouts from "vite-plugin-vue-layouts";
 import viteCompression from "vite-plugin-compression";
 import { createHtmlPlugin } from "vite-plugin-html";
@@ -54,4 +55,6 @@ export default [
   createHtmlPlugin({
     minify: true,
   }),
+  // 生成兼容代码
+  legacy()
 ];
