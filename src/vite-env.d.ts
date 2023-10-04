@@ -11,6 +11,7 @@ interface ImportMetaEnv {
   readonly VITE_APP_TITLE: string;
   readonly VITE_ENABLE_JAX: string;
   readonly VITE_ENABLE_COMPATIBILITY_MODE: string;
+  readonly VITE_ALONE_CHUNK: string;
 }
 
 interface ImportMeta {

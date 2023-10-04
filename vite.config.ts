@@ -4,13 +4,21 @@ import legacy from "@vitejs/plugin-legacy";
 import plugins from "./src/plugins";
 import path from "path";
 
+function resolvePath(url: string): string {
+  return path.resolve(__dirname, url);
+}
+
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   process.env = {
     ...process.env,
     ...loadEnv(mode, process.cwd()),
   };
-  const { VITE_APP_BASE_PATH, VITE_ENABLE_COMPATIBILITY_MODE } = process.env;
+  const {
+    VITE_APP_BASE_PATH,
+    VITE_ENABLE_COMPATIBILITY_MODE,
+    VITE_ALONE_CHUNK,
+  } = process.env;
   if (VITE_ENABLE_COMPATIBILITY_MODE === "true") {
     plugins.push(
       // 兼容低版本浏览器
@@ -31,12 +39,30 @@ export default ({ mode }) => {
     build: {
       target: VITE_ENABLE_COMPATIBILITY_MODE === "true" ? "ES2015" : "modules",
       rollupOptions: {
-        external: [path.resolve(__dirname, "./src/scripts/*")],
+        external: [resolvePath("src/scripts/**")],
+        output: {
+          manualChunks(id) {
+            // 如果模块 ID 包含 node_modules 目录，则将其分割为 vendor chunk
+            if (id.includes("node_modules")) {
+              return "vendor";
+            }
+            let chunks = VITE_ALONE_CHUNK ? JSON.parse(VITE_ALONE_CHUNK) : [];
+            // 如果模块 ID 包含 src/pages 目录，则根据子目录来分割 chunk
+            for (const chunk of chunks) {
+              const { chunkName, chunkFile } = chunk;
+              if (chunkFile.some((item:string) => id.includes(item))) {
+                return chunkName;
+              }
+            }
+            // 其他模块不分割
+            return null;
+          },
+        },
       },
     },
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "./src"),
+        "@": resolvePath("./src"),
       },
     },
   });
