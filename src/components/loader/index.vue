@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSystemStore } from "@/stores/useSystem";
-const { useGlobalLoading } = useSystemStore();
+const { useGlobalLoading } = toRefs(useSystemStore());
 </script>
 
 <template>

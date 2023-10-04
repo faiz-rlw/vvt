@@ -13,7 +13,6 @@ import {
 import { validURL } from "./validate";
 import { toast } from "./util";
 import { useSystemStore } from "@/stores/useSystem";
-const { updateGlobalLoading } = useSystemStore();
 
 const service = axios.create({
   // axios中请求配置有baseURL选项，表示请求URL公共部分
@@ -30,11 +29,12 @@ service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const { useLoading } = optertion;
     if (useLoading) {
-      loadingCount++;
       if (loadingCount === 0) {
+        const { updateGlobalLoading } = useSystemStore();
         // 启动loading
         updateGlobalLoading(true);
       }
+      loadingCount++;
     }
 
     // 请求映射params参数
@@ -64,6 +64,7 @@ service.interceptors.response.use(
     if (useLoading) {
       loadingCount--;
       if (loadingCount === 0) {
+        const { updateGlobalLoading } = useSystemStore();
         // 如果是最后一个响应，就关闭loading
         updateGlobalLoading(false);
       }
@@ -96,6 +97,7 @@ service.interceptors.response.use(
     if (useLoading) {
       loadingCount--;
       if (loadingCount === 0) {
+        const { updateGlobalLoading } = useSystemStore();
         // 如果是最后一个响应，就关闭loading
         updateGlobalLoading(false);
       }
@@ -145,7 +147,7 @@ export function fetchEndpoint(
     axiosConfig.headers["Authorization"] = ``;
   }
 
-  return axios(axiosConfig);
+  return service(axiosConfig);
 }
 
 /**
