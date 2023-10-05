@@ -23,7 +23,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // 根据页面meta的toKeepAlice描述去向哪些指定页面需要缓存当前页面信息
   const list: Array<string> = from.meta.toKeepAlice as Array<string>;
-  const { keepAlive, addIncludeList, deleteIncludeList } = useSystemStore();
+  const { includeList } = toRefs(useSystemStore());
+  const { addIncludeList, deleteIncludeList } = useSystemStore();
   if (list && list.length && list.indexOf(to.path) < 0) {
     addIncludeList({
       to: to.path,
@@ -34,8 +35,8 @@ router.beforeEach((to, from, next) => {
   // 判断进入是否满足缓存列表的一组方向路由
   // 不满足则将缓存列表所对应的缓存页面从缓存列表中去除
   if (
-    keepAlive.value.length &&
-    keepAlive.value.some(
+    includeList.value.length &&
+    includeList.value.some(
       (item) => item.path === to.path && item.to !== from.path
     )
   ) {
@@ -51,7 +52,7 @@ router.afterEach(() => {
   // 跳转后取消全局loading
   const { useGlobalLoading, updateGlobalLoading } = useSystemStore();
   useGlobalLoading && updateGlobalLoading(false);
-  
+
   // 关闭页面进度条
   NProgress.done();
 });

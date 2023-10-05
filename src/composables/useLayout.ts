@@ -2,8 +2,9 @@ export function useLayout(
   clientLayout: Ref<HTMLDivElement | null>,
   layoutPage: Ref<HTMLDivElement | null>
 ) {
-  const { updateClientWidth, updatePageWidth, isPageLocked, keepAlive } =
+  const { updateClientWidth, updatePageWidth } =
     useSystemStore();
+  const { includeList, isPageLocked } = toRefs(useSystemStore());
 
   if (clientLayout) {
     // 监听可视宽度变化
@@ -21,7 +22,7 @@ export function useLayout(
     watch(
       () => isPageLocked,
       (newVal) => {
-        elLocked.value = newVal;
+        elLocked.value = newVal.value;
       }
     );
   } else {
@@ -31,7 +32,7 @@ export function useLayout(
   return {
     // 页面需被缓存的列表
     includeRoutes: computed(() => {
-      return keepAlive.value.map((item) => item.pathName);
+      return includeList.value.map((item) => item.pathName);
     }),
   };
 }

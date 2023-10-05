@@ -59,7 +59,7 @@ export const useSystemStore = defineStore("system", () => {
   function addIncludeList(option: includePage) {
     includeList.value.push(option);
   }
-  function deconsteIncludeList(path: string) {
+  function deleteIncludeList(path: string) {
     includeList.value = includeList.value.filter((item) => item.path !== path);
   }
   function updateIncludeList(option: includePage[]) {
@@ -73,7 +73,7 @@ export const useSystemStore = defineStore("system", () => {
     isPageLocked,
     useGlobalLoading,
     savePositionPaths,
-    keepAlive: computed(() => includeList),
+    includeList,
     updateClientWidth,
     updatePageWidth,
     updatePageLocked,
@@ -81,7 +81,7 @@ export const useSystemStore = defineStore("system", () => {
     addSavePositionPaths,
     deconsteSavePositionPaths,
     addIncludeList,
-    deconsteIncludeList,
+    deleteIncludeList,
     updateIncludeList,
   };
 });
