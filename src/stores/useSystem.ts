@@ -2,31 +2,31 @@ import { acceptHMRUpdate, defineStore } from "pinia";
 
 export const useSystemStore = defineStore("system", () => {
   // 视窗可视宽度
-  const clientWidth: Ref<number> = ref(1920);
+  const clientWidth = ref(1920);
   function updateClientWidth(val: number) {
     clientWidth.value = val;
   }
 
   // 页面宽度
-  const pageWidth: Ref<number> = ref(1920);
+  const pageWidth = ref(1920);
   function updatePageWidth(val: number) {
     pageWidth.value = val;
   }
 
   // 是否缩起内嵌菜单
-  let isCollapsed: Ref<boolean> = computed(() => {
+  const isCollapsed = computed(() => {
     return pageWidth.value ? pageWidth.value < 1440 : false;
   });
 
   // 是否锁定页面
   // https://vueuse.org/core/useScrollLock/
-  let isPageLocked: Ref<boolean> = ref(false);
+  const isPageLocked = ref(false);
   function updatePageLocked(val: boolean) {
     isPageLocked.value = val;
   }
 
   // 是否开启全局loading
-  let useGlobalLoading: Ref<boolean> = ref(false);
+  const useGlobalLoading = ref(false);
   function updateGlobalLoading(val: boolean) {
     useGlobalLoading.value = val;
   }
@@ -36,14 +36,14 @@ export const useSystemStore = defineStore("system", () => {
     url: string;
     top: number;
   };
-  let savePositionPaths: Ref<Array<positionPath>> = ref([]);
+  const savePositionPaths: Ref<positionPath[]> = ref([]);
   function addSavePositionPaths(url: string, top: number) {
     savePositionPaths.value.push({
       url,
       top,
     });
   }
-  function deleteSavePositionPaths(val: string) {
+  function deconsteSavePositionPaths(val: string) {
     savePositionPaths.value = savePositionPaths.value.filter(
       (item) => item.url != val
     );
@@ -55,14 +55,14 @@ export const useSystemStore = defineStore("system", () => {
     path: string;
     pathName: string;
   };
-  let includeList: Ref<Array<includePage>> = ref([]);
+  const includeList: Ref<includePage[]> = ref([]);
   function addIncludeList(option: includePage) {
     includeList.value.push(option);
   }
-  function deleteIncludeList(path: string) {
+  function deconsteIncludeList(path: string) {
     includeList.value = includeList.value.filter((item) => item.path !== path);
   }
-  function updateIncludeList(option: Array<includePage>) {
+  function updateIncludeList(option: includePage[]) {
     includeList.value = option;
   }
 
@@ -79,9 +79,9 @@ export const useSystemStore = defineStore("system", () => {
     updatePageLocked,
     updateGlobalLoading,
     addSavePositionPaths,
-    deleteSavePositionPaths,
+    deconsteSavePositionPaths,
     addIncludeList,
-    deleteIncludeList,
+    deconsteIncludeList,
     updateIncludeList,
   };
 });

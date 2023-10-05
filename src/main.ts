@@ -10,6 +10,11 @@ import "normalize.css/normalize.css";
 import "virtual:uno.css";
 import "@/styles/global.scss";
 import "element-plus/dist/index.css";
+import "@/styles/loading.scss";
+
+import loading from "@/directives/useLoading";
 
 let app = createApp(App);
+
+app.directive("loadingType", loading);
 app.use(preview).use(createPinia()).use(router).mount("#app");
