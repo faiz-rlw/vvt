@@ -1,5 +1,4 @@
 import { defineConfig, loadEnv } from "vite";
-import vueJsx from "@vitejs/plugin-vue-jsx";
 import plugins from "./src/plugins";
 import path from "path";
 
@@ -17,12 +16,6 @@ export default ({ mode }) => {
     VITE_APP_BASE_PATH,
     VITE_ALONE_CHUNK,
   } = process.env;
-  if (process.env.VITE_ENABLE_JAX === "true") {
-    plugins.push(
-      // 支持jsx/tsx
-      vueJsx()
-    );
-  }
   return defineConfig({
     base: VITE_APP_BASE_PATH,
     plugins,
