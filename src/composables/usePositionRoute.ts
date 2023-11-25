@@ -5,7 +5,7 @@ import { useSystemStore } from "../stores/useSystem";
 // 添加后，只有浏览器前进或者后退才可以触发
 // 建议在点击事件里或者使用nextTick包裹，不然容易取不到node节点
 export function usePositionRoute(node: string = "#pageLayout") {
-  const { addSavePositionPaths, deleteSavePositionPaths } = useSystemStore();
+  const { addSavePositionPaths, deconsteSavePositionPaths } = useSystemStore();
   const route = useRoute();
   const { path } = route;
   let dom: HTMLElement | null = null;
@@ -23,7 +23,7 @@ export function usePositionRoute(node: string = "#pageLayout") {
   };
   const deletePath = (url: string) => {
     if (dom) {
-      deleteSavePositionPaths(url);
+      deconsteSavePositionPaths(url);
     } else {
       console.error("未找到指定路由元素,请检查布局文件");
     }

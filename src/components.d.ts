@@ -7,9 +7,8 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ElBacktop: typeof import('element-plus/es')['ElBacktop']
-    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
-    Loader: typeof import('./components/loader/index.vue')['default']
+    ABackTop: typeof import('ant-design-vue/es')['BackTop']
+    AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
     Office: typeof import('./components/office/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

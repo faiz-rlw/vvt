@@ -5,7 +5,7 @@ const { clientWidth } = storeToRefs(useSystemStore());
 <template>
   <div>
     clientWidth: {{clientWidth}}
+    <div class="h-screen bg-red"></div>
+    <div class="h-screen bg-blue"></div>
   </div>
 </template>
-
-<style lang="scss" scoped></style>

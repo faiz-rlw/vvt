@@ -3,57 +3,27 @@
 const clientLayout = ref<HTMLDivElement | null>(null);
 // 路由元素
 const pageLayout = ref<HTMLDivElement | null>(null);
+// HTML BODY
+const body = document.body;
+
 const { includeRoutes } = useLayout(clientLayout, pageLayout);
 </script>
 
 <template>
-  <div class="app_style" ref="clientLayout">
-    <header class="header_area"></header>
-    <section class="content_area">
-      <div class="sider_area"></div>
-      <div class="page_content_area">
-        <div class="layout_page" id="pageLayout" ref="pageLayout">
+  <div class="flex flex-col w-full h-screen" ref="clientLayout">
+    <header class="w-full h-64px"></header>
+    <section class="flex h-[calc(100vh-64px)]">
+      <div class="w-200px h-full"></div>
+      <div class="p-20px flex-1 box-border">
+        <div class="h-full overflow-y-auto" ref="pageLayout">
           <router-view v-slot="{ Component, route }">
             <keep-alive :include="includeRoutes">
               <component :is="Component" :key="route.path" />
             </keep-alive>
           </router-view>
-          <el-backtop target="#pageLayout" />
+          <a-back-top :target="() => (pageLayout ? pageLayout : body)" />
         </div>
       </div>
     </section>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.app_style {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100vh;
-  .header_area {
-    width: 100%;
-    height: 64px;
-  }
-  .content_area {
-    display: flex;
-    height: calc(100vh - 64px);
-
-    .sider_area {
-      width: 200px;
-      height: 100%;
-    }
-
-    .page_content_area {
-      padding: 20px;
-      flex: 1;
-      box-sizing: border-box;
-
-      .layout_page {
-        height: 100%;
-        overflow-y: scroll;
-      }
-    }
-  }
-}
-</style>

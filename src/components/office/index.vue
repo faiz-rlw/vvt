@@ -12,6 +12,8 @@ import "@vue-office/excel/lib/index.css";
 //引入VueOfficePdf组件
 import VueOfficePdf from "@vue-office/pdf";
 
+import { Empty } from "ant-design-vue";
+
 const props = defineProps({
   // 文件路径
   url: {
@@ -67,7 +69,7 @@ const errorHandler = () => {
 </script>
 
 <template>
-  <div :class="['office_area', isEmpty ? 'empty_style' : '']">
+  <div :class="['h-full', isEmpty ? 'flex items-center justify-center' : '']">
     <component
       v-if="!isEmpty"
       :is="fileComponent[props.types]"
@@ -76,17 +78,10 @@ const errorHandler = () => {
       @rendered="renderedHandler"
       @error="errorHandler"
     ></component>
-    <el-empty v-else description="暂无数据" :image="props?.emptyImage || ''" />
+    <a-empty
+      v-else
+      description="暂无数据"
+      :image="props?.emptyImage || Empty.PRESENTED_IMAGE_SIMPLE"
+    />
   </div>
 </template>
-
-<style lang="scss" scoped>
-.office_area {
-  height: 100%;
-}
-.empty_style {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-</style>

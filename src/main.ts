@@ -8,9 +8,8 @@ import preview from "vue3-image-preview";
 
 import "normalize.css/normalize.css";
 import "virtual:uno.css";
-import "@/styles/global.scss";
-import "element-plus/dist/index.css";
-import "@/styles/loading.scss";
+import "@/styles/global.css";
+import "@/styles/loading.css";
 
 import loading from "@/directives/useLoading";
 

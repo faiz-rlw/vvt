@@ -70,7 +70,7 @@ function login() {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .login_page {
   width: 100vw;
   height: 100vh;

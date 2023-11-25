@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+import zhCn from "ant-design-vue/es/locale/zh_CN";
 import { useSystemStore } from "@/stores/useSystem";
 const { useGlobalLoading } = toRefs(useSystemStore());
 </script>
 
 <template>
-  <el-config-provider :locale="zhCn">
+  <a-config-provider :locale="zhCn">
     <router-view v-loadingType="useGlobalLoading" />
-  </el-config-provider>
+  </a-config-provider>
 </template>

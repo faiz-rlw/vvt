@@ -29,7 +29,7 @@ function goPath(type: number) {
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
+<style lang="less" scoped>
 @font-face {
   font-family: dogica;
   src: url(../assets/font/dogica.ttf);

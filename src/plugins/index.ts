@@ -9,7 +9,7 @@ import UnoCSS from "unocss/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import {
-  ElementPlusResolver,
+  AntDesignVueResolver,
   VueUseComponentsResolver,
 } from "unplugin-vue-components/resolvers";
 
@@ -17,13 +17,13 @@ export default [
   vue(),
   // 文件路由
   Pages({
-    extensions: ["vue", "tsx"],
+    extensions: ["vue"],
   }),
   // 布局系统
   Layouts(),
   // api 自动按需引入
   AutoImport({
-    resolvers: [ElementPlusResolver()],
+    resolvers: [AntDesignVueResolver()],
     imports: ["vue", "pinia", "vue-router", "@vueuse/core"],
     dts: "src/auto-imports.d.ts",
     dirs: ["src/apis", "src/composables", "src/stores"],
@@ -40,11 +40,9 @@ export default [
   }),
   // 组件自动按需引入
   Components({
-    dirs: ["src/components/"],
-    extensions: ["vue", "tsx"],
-    include: [/\.vue$/, /\.tsx$/],
+    dirs: ["src/**/components"],
     dts: "src/components.d.ts",
-    resolvers: [ElementPlusResolver(), VueUseComponentsResolver()],
+    resolvers: [AntDesignVueResolver(), VueUseComponentsResolver()],
     deep: true,
   }),
   // 打包压缩资源
