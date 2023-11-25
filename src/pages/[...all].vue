@@ -155,3 +155,8 @@ function goPath(type: number) {
   }
 }
 </style>
+<route lang="yaml">
+meta:
+  layout: blank
+</route>
+
