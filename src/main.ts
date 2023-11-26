@@ -9,11 +9,10 @@ import preview from "vue3-image-preview";
 import "normalize.css/normalize.css";
 import "virtual:uno.css";
 import "@/styles/global.css";
-import "@/styles/loading.css";
 
 import loading from "@/directives/useLoading";
 
 let app = createApp(App);
 
-app.directive("loadingType", loading);
+app.directive("useLoading", loading);
 app.use(preview).use(createPinia()).use(router).mount("#app");

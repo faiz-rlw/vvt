@@ -21,7 +21,7 @@ const loading: Directive<LoadingElement> = {
   },
   updated(el, binding) {
     // 移除或添加div元素
-    if (binding.value !== binding.oldValue) {
+    if (el && binding.value !== binding.oldValue) {
       if (binding.value) {
         appendDomChild(el);
       } else {
@@ -31,7 +31,9 @@ const loading: Directive<LoadingElement> = {
   },
   unmounted(el) {
     // 元素被卸载，移除div元素
-    removeDomChild(el);
+    if (el) {
+      removeDomChild(el);
+    }
   },
 };
 

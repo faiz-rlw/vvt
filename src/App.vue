@@ -6,6 +6,6 @@ const { useGlobalLoading } = toRefs(useSystemStore());
 
 <template>
   <a-config-provider :locale="zhCn">
-    <router-view v-loadingType="useGlobalLoading" />
+    <router-view v-useLoading="useGlobalLoading" />
   </a-config-provider>
 </template>

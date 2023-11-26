@@ -1,3 +1,5 @@
+@import './loading.css';
+
 ::-webkit-scrollbar {
   width: 0;
   height: 10px;
